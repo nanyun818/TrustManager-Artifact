@@ -7,20 +7,7 @@ This repository contains the official experimental artifacts for **TrustManager*
 
 ---
 
-## 📖 Citation
 
-If you use this code or dataset in your research, please cite our paper:
-
-```bibtex
-@inproceedings{zhang2026trustmanager,
-  title={TrustManager: Resilient and Explainable Trust Management for Blockchain Networks via Hybrid AI-Oracle Consensus},
-  author={Zhang, R. and others},
-  booktitle={Proceedings of the XXth International Conference on XXX (XXX '26)},
-  year={2026}
-}
-```
-
----
 
 ## 🏗 Repository Structure
 
