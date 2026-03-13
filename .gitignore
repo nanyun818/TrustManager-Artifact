@@ -40,3 +40,9 @@ README_ARTIFACT.md
 TESTNET_GUIDE.md
 FAUCET_GUIDE.md
 IEEE_TDSC_Template.tex
+node_modules/
+data/
+outputs/
+plots/
+reports/
+*.md
