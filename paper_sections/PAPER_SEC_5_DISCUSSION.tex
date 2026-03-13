@@ -1,0 +1,49 @@
+\section{Discussion & Security Analysis}
+
+\subsection{Oracle Security & Trust Assumptions}
+A critical challenge in hybrid architectures is ensuring the integrity of off-chain data. We address this through a \textbf{Commit-Reveal Scheme} combined with \textbf{Staking Penalties}.
+\begin{itemize}
+    \item \textbf{Sybil Resistance:} Each oracle node must stake $K$ tokens. If a node signs a risk score that deviates from the consensus majority by more than $\delta$, its stake is slashed.
+    \item \textbf{Collusion Resistance (Challenge Period):} While staking deters individual malicious nodes, it may fail against majority collusion ($>2/3$ nodes). To mitigate this, we propose a \textbf{Challenge Period} mechanism (inspired by Optimistic Rollups). Before finalization, there is a time window $T_{challenge}$ where any honest verifier can submit a fraud proof. If the proof is valid (e.g., demonstrating that the risk score was calculated incorrectly based on on-chain data), the malicious result is reverted, and the colluding nodes' stakes are slashed.
+    \item \textbf{Liveness vs. Safety:} We prioritize safety over liveness. In the event of a network partition where $< \frac{2}{3}$ nodes are reachable, the system defaults to a "Fail-Open" state (allowing transactions but logging a warning) to prevent user fund lockup, or "Fail-Close" for high-value transactions ($>10$ ETH).
+\end{itemize}
+
+\subsubsection{Game Theoretic Analysis of Collusion.}
+Consider a rational adversary deciding whether to bribe $k$ oracle nodes to force a false negative. Let $S$ be the staked amount per node, $P$ be the profit from a successful attack, and $C_{bribe}$ be the bribe cost. The adversary succeeds only if they control $> \frac{2}{3}n$ nodes AND no honest node submits a fraud proof during $T_{challenge}$.
+
+If even \textit{one} honest verifier submits a proof, all $k$ bribed nodes are slashed. The expected payoff for a colluding node $i$ is:
+\begin{equation}
+    E[U_i] = \text{Bribe}_i - \text{Prob}(\text{Detected}) \cdot S
+\end{equation}
+With the challenge period, $\text{Prob}(\text{Detected}) \to 1$ as long as there is at least one honest monitor in the network. Thus, collusion is irrational unless the bribe covers the full stake loss ($C_{bribe} > k \cdot S$), and the total attack cost exceeds the potential profit ($k \cdot S > P$). This holds provided we set $S > P_{max} / (2n/3)$, where $P_{max}$ is the maximum extractable value per block.
+
+\subsection{Threats to Validity}
+Our evaluation uses a carefully constructed multichain dataset with injected adversarial behaviors. Although we verify benign ground truth via code verification and usage thresholds, residual label noise may persist. Synthetic attacks approximate realistic strategies but cannot cover the full adversarial space. To mitigate overfitting, we employ stratified 5-fold cross-validation and bootstrap confidence intervals, and we release scripts for data construction and evaluation to enable independent replication.
+
+\subsection{Gas Cost Analysis}
+We verified the on-chain verification cost on the Sepolia testnet.
+\begin{table}[htbp]
+\centering
+\caption{On-Chain Gas Consumption (Wei)}
+\label{tab:gas}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Operation} & \textbf{Gas Used} & \textbf{Cost (at 20 Gwei)} \\
+\midrule
+Risk Score Submission & 45,200 & $\approx$ \$0.003 \\
+Signature Verification (ECDSA) & 3,000 & $\approx$ \$0.0002 \\
+Policy Enforcement (Revert) & 400 & Negligible \\
+\textbf{Total Overhead} & \textbf{48,600} & \textbf{$\approx$ \$0.0032} \\
+\bottomrule
+\end{tabular}
+\end{table}
+Compared to full on-chain execution of a Random Forest model (which would exceed the block gas limit), our hybrid approach reduces costs by over \textbf{99.9\%}, making real-time protection economically viable.
+
+\subsection{Ethical Considerations \& Responsible Use}
+Risk scoring can affect user access to financial services. We enforce minimum transparency by exposing feature importance and reasons for blocking, and we support an appeal path for users. For new accounts, our cold-start policy applies stricter thresholds only to high-risk actions and avoids permanent blacklisting without corroborating evidence.
+
+\subsection{Limitations & Future Work}
+\begin{enumerate}
+    \item \textbf{Zero-Day Exploits:} While our model detects behavioral anomalies, it may initially miss novel attack vectors that perfectly mimic benign traffic (e.g., flash loan attacks with normal gas usage). We plan to integrate \textbf{Reinforcement Learning} to adaptively learn new patterns.
+    \item \textbf{Privacy Preservation:} Currently, transaction details are exposed to oracle nodes. Future iterations will utilize \textbf{Zero-Knowledge Proofs (ZK-ML)} to prove the risk score computation without revealing the underlying transaction data.
+\end{enumerate}

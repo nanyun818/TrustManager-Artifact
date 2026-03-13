@@ -1,0 +1,22 @@
+{
+  "Stealth": {
+    "total": 20,
+    "banned": 0,
+    "penalized": 20
+  },
+  "RandomFault": {
+    "total": 20,
+    "banned": 20,
+    "penalized": 0
+  },
+  "Oscillating": {
+    "total": 20,
+    "banned": 0,
+    "penalized": 20
+  },
+  "Honest": {
+    "total": 20,
+    "banned": 0,
+    "penalized": 0
+  }
+}
