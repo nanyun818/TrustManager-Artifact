@@ -1,0 +1,50 @@
+\section{Related Work}
+
+\subsection{Static and Symbolic Analysis}
+The foundational layer of smart contract security relies on static analysis and symbolic execution. Tools such as \textbf{Oyente}, \textbf{Mythril}, and \textbf{Slither} analyze contract bytecode or source code to detect known vulnerability patterns like Reentrancy, Integer Overflows, and Unchecked External Calls. \textbf{Securify} introduces formal verification to prove the violation of safety properties. 
+While effective for identifying coding errors during the development phase, these tools suffer from significant limitations in the DeFi era:
+\begin{enumerate}
+    \item \textbf{Logic Blindness:} They cannot detect business logic flaws or "Rug Pull" mechanisms (e.g., a hidden minting function) that are syntactically correct but semantically malicious.
+    \item \textbf{Lack of Runtime Context:} Static tools cannot analyze transaction sequences or external state dependencies (e.g., Flash Loan attacks), rendering them ineffective against dynamic exploits.
+\end{enumerate}
+TrustManager differs by focusing on \textit{runtime behavioral analysis}, capturing malicious intent through transaction execution traces rather than code structure.
+
+\subsection{Machine Learning in Blockchain Security}
+Recent literature has explored Machine Learning (ML) for detecting anomalies in blockchain networks. 
+\textbf{Ponzi Scheme Detection:} Early works utilized feature engineering (e.g., Gini coefficient of transaction values) with XGBoost or SVM to identify Ponzi schemes on Ethereum.
+\textbf{Phishing & Fraud Detection:} More advanced approaches employ Graph Neural Networks (GNNs) or Random Walks (e.g., \textit{Trans2Vec}) to model the transaction graph and propagate guilt from known malicious nodes.
+\textbf{Limitations of Prior ML Works:} Most existing studies operate in a \textit{post-mortem} or \textit{offline} manner. They analyze historical data to classify addresses long after the attack has occurred. Furthermore, deep learning models (GNN/LSTM) often lack explainability, making them unsuitable for high-stakes financial decisions where users demand to know \textit{why} a transaction was blocked. Our work prioritizes \textit{explainable AI} (Random Forest with feature importance) and \textit{real-time} prevention.
+
+\subsection{Graph Learning and Explainability}
+Graph Neural Networks have become a dominant approach for modeling relational structures on blockchains due to their ability to propagate signals along edges and capture higher-order interactions. Comprehensive surveys on GNNs summarize architectures and training challenges in large, dynamic graphs. While GNNs achieve high detection accuracy, explainability remains an open problem for high-stakes finance; therefore, models with transparent importance attribution (e.g., Random Forests with permutation importance) remain attractive for user-facing systems. Classical graph-theoretic measures such as PageRank and degree centrality are effective lightweight alternatives that preserve interpretability while capturing global and local influence.
+
+\subsection{Real-time Monitoring & Security Oracles}
+Operational security tools like \textbf{Forta}, \textbf{OpenZeppelin Defender}, and \textbf{GoPlus Security} provide real-time monitoring capabilities.
+\begin{itemize}
+    \item \textbf{Forta} utilizes a decentralized network of bots to scan transactions against predefined heuristics (e.g., "alert if gas usage $>$ 10M").
+    \item \textbf{GoPlus} offers an API for token security detection.
+\end{itemize}
+However, these systems largely rely on \textbf{rigid rule-based heuristics}, which suffer from high false-positive rates (alert fatigue) and are easily bypassed by stealthy attacks (e.g., splitting a large hack into multiple small transactions). Moreover, they typically function as "Alerting Systems" rather than "Prevention Systems"—they notify the user, but often too late to stop the transaction.
+TrustManager bridges this gap by introducing a \textbf{Hybrid AI-Oracle} architecture. Unlike passive monitors, our system acts as an active gatekeeper, using consensus-validated ML scores to programmatically block malicious transactions on-chain before finalization.
+
+\subsection{Decentralized Oracles and Rollups}
+Decentralized Oracle Networks (DONs) such as Chainlink use threshold signatures and staking to provide tamper-resistant data feeds. Optimistic systems including Optimistic Rollups and optimistic oracles (e.g., UMA) achieve scalability by assuming honest execution and enabling fraud proofs within a challenge window. Our design adopts this paradigm: threshold consensus offers fast-path finality for routine transactions, while a challenge period provides a cryptographic and economic backstop against majority collusion.
+
+\subsection{Gap Analysis}
+Table \ref{tab:comparison} summarizes the distinction between TrustManager and existing solutions. We are the first to combine off-chain ML flexibility with on-chain enforceability in a cross-chain context.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison with State-of-the-Art Solutions}
+\label{tab:comparison}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Solution} & \textbf{Analysis Type} & \textbf{Detection Logic} & \textbf{Real-time Blocking} & \textbf{Cross-chain} \\
+\midrule
+Mythril / Slither & Static & Symbolic / Patterns & No (Audit only) & No \\
+Forta & Dynamic & Rule-based Bots & No (Alert only) & Yes \\
+GNN-based Methods & Graph Analysis & Deep Learning & No (Offline) & No \\
+\textbf{TrustManager (Ours)} & \textbf{Hybrid} & \textbf{ML (Random Forest)} & \textbf{Yes (via Oracle)} & \textbf{Yes} \\
+\bottomrule
+\end{tabular}
+\end{table}

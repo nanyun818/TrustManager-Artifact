@@ -1,0 +1,153 @@
+\section{Methodology}
+
+\subsection{Threat Model}
+We formally define the threat model as follows:
+
+\subsubsection{Attacker Capabilities.}
+\begin{itemize}
+    \item \textbf{Byzantine Oracle Nodes:} The attacker can control at most $f < n/3$ oracle nodes.
+    \item \textbf{Adversarial Transactions:} The attacker can craft malicious transactions (e.g., splitting funds, obfuscating call chains) to bypass detection.
+    \item \textbf{Model Extraction:} The attacker has white-box access to the model architecture and can query the oracle to infer decision boundaries.
+\end{itemize}
+
+\subsubsection{Attacker Goals.}
+\begin{itemize}
+    \item \textbf{False Negative (Evasion):} Successfully execute a malicious transaction without being flagged.
+    \item \textbf{False Positive (DoS):} Trigger false alarms for legitimate transactions to disrupt service.
+    \item \textbf{Privacy Leakage:} Infer sensitive transaction details (e.g., slippage tolerance, trade size) from oracle interactions.
+\end{itemize}
+
+\subsubsection{Security Goals.}
+\begin{itemize}
+    \item \textbf{Detection Guarantee:} The system classifies transactions correctly with probability $1-\epsilon$, assuming $< n/3$ Byzantine nodes.
+    \item \textbf{Liveness Guarantee:} The system continues to process transactions and reach consensus despite node failures.
+    \item \textbf{Privacy Guarantee:} The system satisfies $(\epsilon, \delta)$-Differential Privacy (future work).
+\end{itemize}
+
+\begin{theorem}[Byzantine Tolerance]
+Given $n$ oracle nodes, if at most $f < n/3$ are Byzantine, the TrustManager risk score error satisfies:
+$$P(|S_{final} - S_{true}| > \epsilon) < \delta$$
+where $S_{true}$ is the true score aggregated from the honest majority.
+\end{theorem}
+
+\begin{proof}
+(Proof sketch) We leverage the Hoeffding inequality combined with majority voting theory. Let $X_i$ be the risk score from node $i$. Since honest nodes are i.i.d. with mean $S_{true}$, the aggregation of $n-f$ honest nodes converges to $S_{true}$ exponentially fast with $n$.
+\end{proof}
+
+\subsection{System Architecture}
+TrustManager employs a hybrid architecture that bridges off-chain intelligence with on-chain execution. The system consists of three core components:
+\begin{enumerate}
+    \item \textbf{Transaction Monitor (Off-chain):} A network of nodes that listen to the mempool of target blockchains (Ethereum, Polygon, BSC) for pending transactions.
+    \item \textbf{AI Risk Engine:} A Random Forest classifier that analyzes transaction features in real-time to assign a risk score ($R \in [0, 1]$).
+    \item \textbf{Trust Oracle (On-chain):} A smart contract that aggregates votes from off-chain nodes using a threshold signature scheme (TSS) and enforces security policies (e.g., blocking malicious transactions).
+\end{enumerate}
+
+\subsection{Feature Engineering}
+To detect malicious patterns effectively, we engineered a set of domain-specific features derived from raw transaction data.
+
+\subsubsection{Gas Ratio ($f_{gas}$).}
+Malicious contracts often consume gas differently than legitimate ones. We define Gas Ratio as the ratio of gas used to the gas limit provided:
+\begin{equation}
+    f_{gas} = \frac{\text{GasUsed}}{\text{GasLimit}}
+\end{equation}
+A high $f_{gas}$ (close to 1.0) often indicates a precise calculation typical of attacks (to avoid out-of-gas errors) or complex recursive calls in reentrancy attacks.
+
+\subsubsection{Unlimited Approval ($f_{unlim}$).}
+Many DeFi protocols require users to approve an infinite amount of tokens ($2^{256}-1$). However, this pattern is also abused by wallet drainers.
+\begin{equation}
+    f_{unlim} = \begin{cases} 
+    1 & \text{if } \text{ApprovalValue} > 2^{255} \\
+    0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\subsubsection{Fresh Spender ($f_{fresh}$).}
+Attackers frequently use fresh addresses to evade blacklists. We track the age (nonce) of the spender address:
+\begin{equation}
+    f_{fresh} = \begin{cases} 
+    1 & \text{if } \text{Nonce} < 5 \\
+    0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\subsection{Temporal-Aware Feature Engineering}
+Static features often fail to detect sophisticated "low-and-slow" attacks where individual transactions appear benign but the sequence is malicious. To address this, we introduce a \textbf{Sliding Window} mechanism (window size $W=1$ hour) to capture temporal patterns for each sender address $A$.
+
+\subsubsection{Transaction Velocity ($v_{W}$).}
+The frequency of transactions within the time window. A sudden burst of activity from a previously dormant account is a strong indicator of compromise or bot activity.
+\begin{equation}
+    v_{W}(t) = \sum_{tx \in \mathcal{H}_A} \mathbb{I}(t - t_{tx} \leq W)
+\end{equation}
+where $\mathcal{H}_A$ is the history of transactions for address $A$, and $t$ is the current transaction timestamp.
+
+\subsubsection{Time Since Last Transaction ($\Delta t$).}
+The time elapsed since the previous transaction from the same address. Extremely short intervals ($\Delta t \to 0$) suggest automated scripts or "bot" behavior typical of DDoS or arbitrage attacks.
+\begin{equation}
+    \Delta t = t_{current} - t_{last}
+\end{equation}
+
+\subsubsection{Gas Pattern Evolution ($SMA_{gas}$).}
+We compute the Simple Moving Average (SMA) of gas usage over the window $W$. Attackers often stabilize gas prices to ensure transaction inclusion during a batched attack.
+\begin{equation}
+    SMA_{gas} = \frac{1}{N_W} \sum_{i=1}^{N_W} gas\_used_i
+\end{equation}
+
+\subsection{Graph-Based Feature Learning (Option C)}
+To capture the \textit{relational} structure of malicious activities (e.g., money laundering rings or Sybil attacks), we model the transaction history as a directed graph $G = (V, E)$, where $V$ represents addresses and $E$ represents transactions.
+
+\subsubsection{Why Random Forest over End-to-End GNNs?}
+While Graph Neural Networks (GNNs) offer powerful relational inductive biases, they often operate as "black boxes," making it difficult to explain \textit{why} a transaction was flagged. In financial security, explainability is paramount for user trust and recourse. We explicitly choose a \textbf{Random Forest} classifier as our core decision engine because:
+\begin{enumerate}
+    \item \textbf{Explainability:} It provides intrinsic feature ranking (Gini impurity), allowing us to generate readable "reasons" for users (e.g., "High Gas Ratio" + "New Account").
+    \item \textbf{Efficiency:} Inference is computationally cheaper ($O(T \cdot d)$ vs $O(L \cdot |E| \cdot d^2)$ for GNNs), enabling lower-latency responses suitable for real-time oracle queries.
+    \item \textbf{Hybrid Approach:} We do not discard graph information; instead, we distill it into interpretable features (PageRank, Centrality) via our Graph-Based Feature Learning module, combining the structural insights of graphs with the transparency of tree ensembles.
+\end{enumerate}
+
+\subsubsection{Graph Construction.}
+We construct the graph dynamically from the transaction window. For each transaction $tx_{i} : u \to v$, we add a directed edge $(u, v)$ with weights corresponding to the transaction value and gas usage.
+
+\subsubsection{Network Centrality Features.}
+We compute the following graph-theoretic metrics for each node $u \in V$:
+\begin{itemize}
+    \item \textbf{PageRank (TrustRank):} Measures the global importance of a node. Legitimate exchanges (e.g., Binance, Uniswap) typically have high PageRank, while sybil nodes have low rank.
+    \begin{equation}
+        PR(u) = \frac{1-d}{N} + d \sum_{v \in M(u)} \frac{PR(v)}{L(v)}
+    \end{equation}
+    where $d=0.85$ is the damping factor.
+    \item \textbf{Degree Centrality:} The in-degree ($d_{in}$) and out-degree ($d_{out}$) capture the immediate connectedness. High $d_{out}$ with low $d_{in}$ often characterizes "dispersion" wallets used in dusting attacks.
+\end{itemize}
+
+\subsubsection{Graph-Enhanced Classifier.}
+We concatenate the static features ($X_{static}$), temporal features ($X_{temporal}$), and graph features ($X_{graph}$) to form a comprehensive feature vector:
+\begin{equation}
+    X_{final} = [X_{static} \parallel X_{temporal} \parallel X_{graph}]
+\end{equation}
+This enriched vector is fed into the Random Forest classifier, allowing the model to detect anomalies based on both individual behavior and network structure.
+
+\subsection{Consensus-Based Verification}
+To prevent a single malicious off-chain node from censoring transactions, we implement a $t$-of-$n$ consensus mechanism. A transaction is confirmed as malicious only if:
+\begin{equation}
+    \sum_{i=1}^{n} \mathbb{I}(R_i > \tau) \geq t
+\end{equation}
+where $R_i$ is the risk score from node $i$, $\tau$ is the high-risk threshold (0.8), and $t$ is the consensus threshold (typically $2n/3$).
+
+\subsection{Formal Security of the Challenge Period}
+To mitigate majority collusion, we introduce a Challenge Period. We formally define its security properties as follows:
+
+\begin{definition}[$\tau$-Soundness]
+If a transaction $tx$ is truly malicious (ground truth $y=1$), the probability that the finalized risk score $R_{final} < \tau_{threshold}$ is bounded by a negligible function $\mu(\lambda)$, assuming at least one honest verifier exists during the challenge period $T_{challenge}$.
+\end{definition}
+
+\begin{definition}[Completeness]
+If a transaction $tx$ is benign ($y=0$), the system accepts it with probability $1 - \text{negl}(\lambda)$, provided the user does not behave indistinguishably from an attacker.
+\end{definition}
+
+\textbf{Mechanism:} The challenge period $T$ allows any node to submit a fraud proof $\pi_{fraud}$ referencing on-chain state $S_t$. If $Verify(S_t, \pi_{fraud}) = \text{True}$, the oracle consensus is overturned. This assumes a synchronous network model within window $T$, ensuring that if an honest verifier broadcasts a proof, it will be included in a block.
+
+\subsection{Cold-Start: Initial Trust for New Addresses}
+Newly created addresses have no historical interactions, which can bias behavioral features towards default values and degrade user experience. We address this \textit{cold-start} problem by combining a Bayesian prior with graph priors:
+\begin{itemize}
+    \item \textbf{Bayesian Prior.} We calibrate a prior risk $\pi_0$ from the training distribution and apply Laplace smoothing to temporal counts: $\hat{v}_W = \frac{v_W + \alpha}{N_W + \alpha + \beta}$ with hyperparameters $(\alpha,\beta)$ tuned via cross-validation.
+    \item \textbf{Graph Prior.} For nodes unseen in the transaction history, we assign PageRank- and degree-based priors from their immediate neighbors when available; otherwise we set $X_{graph}=0$ and down-weight graph features via feature scaling.
+    \item \textbf{Tiered Policy.} For addresses with $\text{Nonce}=0$ and $\text{Age}<\Delta$, we classify only when $R>\tau_{high}$; otherwise the transaction is flagged for manual review. This limits false positives on genuine newcomers while keeping strong guarantees for security-critical actions.
+\end{itemize}

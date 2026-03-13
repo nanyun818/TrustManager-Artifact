@@ -1,0 +1,42 @@
+# Virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Data and results
+out/
+analysis_results/
+artifacts/
+cache/
+*.log
+*.txt
+!requirements.txt
+!contract_address.txt
+
+# Visualization and reports
+*.html
+*.png
+*.svg
+*.pdf
+
+# Models (exclude auto-generated timestamped versions)
+models/logreg.*.json
+models/rf_model.*.json
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Documentation (experiment-unrelated)
+PAPER_OUTLINE_FINAL.md
+PAPER_OUTLINE_FINAL_CN.md
+PAPER_STRUCTURE_TOP_TIER.md
+PHASE_REPORT.md
+README_PAPER.md
+README_PAPER_ASSETS.md
+README_PAPER_ASSETS_CN.md
+README_ARTIFACT.md
+TESTNET_GUIDE.md
+FAUCET_GUIDE.md
+IEEE_TDSC_Template.tex

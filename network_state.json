@@ -1,0 +1,192 @@
+[
+  {
+    "address": "0x02484cb50AAC86Eae85610D6f4Bf026f30f6627D",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+    "trust": "100",
+    "success": "0",
+    "latency": "5000",
+    "online": "100",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "1"
+  },
+  {
+    "address": "0xb4585a80f57Bb2Bf376F3E0aDB21EE88258d68b4",
+    "trust": "100",
+    "success": "100",
+    "latency": "45",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x8238788FD3cf35e828529C9322eDa18434C68FAd",
+    "trust": "100",
+    "success": "100",
+    "latency": "45",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x2B8Fa68b1379F1d9FcFd546D24fed8f939a06FaC",
+    "trust": "100",
+    "success": "100",
+    "latency": "45",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x90D2E0c16629eaB6b7C3861e86B3DF091E9D1b4b",
+    "trust": "126",
+    "success": "10",
+    "latency": "5000",
+    "online": "3700",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x55540DD4b1E97F60c0c6f04dDF2fD55a523ae2e4",
+    "trust": "126",
+    "success": "10",
+    "latency": "5000",
+    "online": "3700",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x104B1D3cdD621da285c7d9FF793A05a72a3CC48B",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x47F22514dBd609feFdc7F6bbCcc8e5bCF725d8E1",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x698c6414f3a12D379e5dc47E6EA923aBbe1231E7",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x366bDF013d87F020e76e1d26a6Ed225da6a5284E",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x98e22827F976B3b11E78577EC396811577a5C686",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x5B11E68Cc364608505a6BcD237c89Be2113740b6",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0xeACdf73266a63d08EfB90ad55CFC6EdCD47bdc6F",
+    "trust": "94",
+    "success": "85",
+    "latency": "450",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0xB2DF0368AE86FCCE9A834751Bf3F96C4Ff84df5C",
+    "trust": "94",
+    "success": "85",
+    "latency": "450",
+    "online": "10800",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "3"
+  },
+  {
+    "address": "0x9317c2EdB288ec3fAdE35f05eEF841bE20293b95",
+    "trust": "118",
+    "success": "0",
+    "latency": "5000",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0x5C5ea1Ea5BA24C7af3Efb4f1Db8f3Ca9c1e8E472",
+    "trust": "118",
+    "success": "0",
+    "latency": "5000",
+    "online": "7200",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "2"
+  },
+  {
+    "address": "0xa80bb94aDbB408E4E12ef2d4e3e273113535aE40",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "3600",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "1"
+  },
+  {
+    "address": "0x75Fd6bBaC2b279f916B1Ae26DDd1AA5Ed2Aa9fC5",
+    "trust": "100",
+    "success": "100",
+    "latency": "50",
+    "online": "3600",
+    "active": true,
+    "blacklisted": false,
+    "interactions": "1"
+  }
+]

@@ -1,0 +1,246 @@
+{
+  "type": "random_forest",
+  "n_trees": 10,
+  "trees": [
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "value": 0.0
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "feature_idx": 2,
+        "threshold": 0.212,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "feature_idx": 1,
+          "threshold": 4.0,
+          "left": {
+            "value": 0.0
+          },
+          "right": {
+            "value": 1.0
+          }
+        }
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "value": 0.0
+      },
+      "right": {
+        "feature_idx": 1,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "feature_idx": 2,
+        "threshold": 0.212,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "feature_idx": 1,
+          "threshold": 4.0,
+          "left": {
+            "value": 0.0
+          },
+          "right": {
+            "value": 1.0
+          }
+        }
+      },
+      "right": {
+        "feature_idx": 2,
+        "threshold": 0.3135,
+        "left": {
+          "value": 1.0
+        },
+        "right": {
+          "value": 0.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "feature_idx": 2,
+        "threshold": 0.212,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "feature_idx": 1,
+          "threshold": 4.0,
+          "left": {
+            "value": 0.0
+          },
+          "right": {
+            "value": 1.0
+          }
+        }
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.2029,
+      "left": {
+        "value": 0.0
+      },
+      "right": {
+        "feature_idx": 1,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "feature_idx": 2,
+        "threshold": 0.212,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "feature_idx": 0,
+          "threshold": 4.0,
+          "left": {
+            "value": 0.0
+          },
+          "right": {
+            "value": 1.0
+          }
+        }
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "value": 0.0
+      },
+      "right": {
+        "feature_idx": 2,
+        "threshold": 0.2964,
+        "left": {
+          "value": 1.0
+        },
+        "right": {
+          "value": 0.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "value": 0.0
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    },
+    {
+      "feature_idx": 2,
+      "threshold": 0.25,
+      "left": {
+        "feature_idx": 2,
+        "threshold": 0.212,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "feature_idx": 0,
+          "threshold": 4.0,
+          "left": {
+            "value": 0.0
+          },
+          "right": {
+            "value": 1.0
+          }
+        }
+      },
+      "right": {
+        "feature_idx": 0,
+        "threshold": 4.0,
+        "left": {
+          "value": 0.0
+        },
+        "right": {
+          "value": 1.0
+        }
+      }
+    }
+  ]
+}

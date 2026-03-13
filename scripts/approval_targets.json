@@ -1,0 +1,14 @@
+{
+  "targets": [
+    { "label": "USDT", "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7", "type": "token" },
+    { "label": "USDC", "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "type": "token" },
+    { "label": "UniswapV2Router", "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "type": "spender" },
+    { "label": "UniswapV3Router", "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564", "type": "spender" },
+    { "label": "0xExchangeProxy", "address": "0xDEF1C0ded9bec7F1a1670819833240f027b25EfF", "type": "spender" },
+    { "label": "OpenSeaSeaport", "address": "0x00000000006c3852cbEf3e08E8dF289169EdE581", "type": "spender" },
+    { "label": "AaveLendingPoolV2", "address": "0x7d2768dE32b0b80b7a3454c06BdAc7569008b0C0", "type": "spender" },
+    { "label": "CurvePool", "address": "0xA5407eAE9Ba414226955e420DAbB33aD20efYetb", "type": "spender" },
+    { "label": "BalancerVault", "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8", "type": "spender" },
+    { "label": "SushiSwapRouter", "address": "0xd9e1ce17f2641f24Ae83637ab66a2cca9C378B9F", "type": "spender" }
+  ]
+}

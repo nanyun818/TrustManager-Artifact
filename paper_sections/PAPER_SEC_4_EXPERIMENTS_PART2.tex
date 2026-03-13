@@ -1,0 +1,26 @@
+\subsection{Comparative Analysis with Strong Baselines}
+To rigorously validate TrustManager's performance, we compared it against two strong baselines representing state-of-the-art approaches in tabular and graph learning:
+\begin{enumerate}
+    \item \textbf{Gradient Boosting (GBM):} A powerful tree-based ensemble method (similar to XGBoost/LightGBM) known for winning Kaggle competitions on structured data.
+    \item \textbf{Graph Neural Network (GNN-MLP):} A deep learning baseline that aggregates neighbor features (simulating GraphSAGE/GCN) and feeds them into a multi-layer perceptron.
+\end{enumerate}
+
+Table \ref{tab:strong_baselines} summarizes the results. TrustManager achieves the highest F1-Score (\textbf{97.08\%}), significantly outperforming the GNN-MLP baseline (88.91\%) and surpassing the strong Gradient Boosting baseline (95.33\%).
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison with Strong Baselines}
+\label{tab:strong_baselines}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{F1-Score} & \textbf{AUC} & \textbf{Training Time (s)} \\
+\midrule
+Gradient Boosting (GBM) & 95.33\% & 0.9992 & 81.12 \\
+GNN-MLP (GraphSAGE-like) & 88.91\% & 0.9979 & 416.57 \\
+\textbf{TrustManager (Ours)} & \textbf{97.08\%} & \textbf{0.9996} & \textbf{8.24} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Efficiency vs. Accuracy.}
+Beyond accuracy, TrustManager demonstrates superior efficiency. It requires only \textbf{8.24 seconds} to train, which is \textbf{10x faster} than GBM and \textbf{50x faster} than the Neural Network. This efficiency is critical for decentralized oracle nodes that operate with limited computational resources and strict latency requirements. The GNN-MLP baseline, while powerful in theory, suffers from high computational cost and lower interpretability without yielding better detection performance on our dataset.

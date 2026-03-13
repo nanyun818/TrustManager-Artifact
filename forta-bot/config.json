@@ -1,0 +1,97 @@
+{
+  "stablecoins": [
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "0x82af49447d8a07e3bd95bd0d56f35241523fbab"
+  ],
+  "known_safe_spenders": [
+    "0x1111111254fb6c44bac0bed2854e76f90643097d",
+    "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+  ],
+  "known_permit2": [
+    "0x000000000022D473030F116dDEE9F6B43aC78BA3"
+  ],
+  "short_interval_blocks": 30,
+  "stablecoin_combo_threshold": 3,
+  "permit_selectors": [
+    "0xd505accf",
+    "0x8fcbaf0c"
+  ],
+  "network": "arbitrum",
+  "rpc_url_primary": "https://arb1.arbitrum.io/rpc",
+  "rpc_url_backup": "https://rpc.ankr.com/arbitrum",
+  "score_threshold": 0.75,
+  "enable_model": true,
+  "model_threshold": 0.3,
+  "model_path": "models/logreg.json",
+  "whitelist_score_multiplier": 0.5,
+  "enable_balancer": true,
+  "enable_dex": true,
+  "known_bridges": [
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+    "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+    "0x467194771dae2967aef3ecbedd3bf9a310c76c65",
+    "0xD7e7F4A0e98534D4FD50d0357B06bFb2f7Db39C3",
+    "0xA72C6d67AC3e73bB5A5d3cbCAb081fB3Be8eC63e",
+    "0x636Af16bf2f682dD3109e60102b8E1A089FedAa8",
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+    "0x32400084C286CF3E17e7B677ea9583e60a000324",
+    "0xDE29D0b5bB1dA8708E204dE271d3cA9eEBcF1b5",
+    "0x6b2A5Eba8fE07C64c35Fb1AEDe04E0cd118A88B6",
+    "0xb8901acB165ed027E32754E0FFe830802919727f",
+    "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
+    "0x1a44076050125825900e736c501f859c50fe728c",
+    "0x4200000000000000000000000000000000000010"
+  ],
+  "density_blocks": 10,
+  "density_threshold": 30,
+  "fanout_threshold": 12,
+  "flow_threshold_tokens": 50000,
+  "balancer": {
+    "arbitrum": {
+      "vaults": ["0xBA12222222228d8Ba445958a75a0704d566BF2C8"],
+      "pools": [
+        "0x32296969ef14eb0c6d29669c550d4a0449130230",
+        "0x01990f1e6f7f32296f125ee9469705c1c070054d",
+        "0xf13758d6edd1937dcb3f4fe75889b579d400299a"
+      ]
+    },
+    "mainnet": {
+      "vaults": ["0xBA12222222228d8Ba445958a75a0704d566BF2C8"],
+      "pools": []
+    }
+  }
+  ,
+  "uniswap_v3": {
+    "arbitrum": {
+      "pools": [
+        "0xc31e54c7a869b9fcbecc14363cf510d1c41fa443",
+        "0xc6962004f452be9203591991d15f6b388e09e8d0",
+        "0x641c00a822e8b671738d32a431a4fb6074e5c79d"
+      ]
+    },
+    "mainnet": {
+      "pools": [
+        "0x88e6A0C2dDd26FEEb64F039A2c41296fcb3f5640"
+      ]
+    }
+  },
+  "curve": {
+    "arbitrum": {
+      "pools": [
+        "0x7f90122BF0700f9E7e1f688Fe926940E8839F353"
+      ]
+    },
+    "mainnet": {
+      "pools": [
+        "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"
+      ]
+    }
+  }
+}

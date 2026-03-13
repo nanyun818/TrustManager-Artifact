@@ -1,0 +1,8 @@
+{
+  "comment": "Populate with spender contract addresses you consider common/benign to avoid false positives.",
+  "addresses": [
+    "0xE592427A0AEce92De3Edee1F18E0157C05861564",  // Uniswap V3 Router
+    "0x1111111254fb6c44b4f0e6a0b0b54c6a8a2f8f",    // 1inch Router (example)
+    "0xDef1C0ded9bec7F1a1670819833240f027b25EfF"   // 0x Exchange Proxy
+  ]
+}

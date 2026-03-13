@@ -1,0 +1,14 @@
+\section{Introduction}
+Blockchain technology has revolutionized financial systems through Decentralized Finance (DeFi), enabling trustless and transparent transactions. However, the immutability of smart contracts also amplifies security risks. Malicious actors frequently exploit unlimited token approvals, reentrancy vulnerabilities, and deceptive contract interactions to drain user funds. According to recent reports, DeFi hacks resulted in losses exceeding \$3 billion in 2023 alone, highlighting the urgent need for robust security mechanisms.
+
+\textbf{Problem Statement.} Traditional security measures rely heavily on two approaches: (1) \textit{Static Analysis} tools (e.g., Slither, Mythril) which are effective during development but cannot detect runtime behavioral anomalies; and (2) \textit{Centralized Monitoring} services (e.g., Etherscan labeling) which are often reactive and suffer from single points of failure. Existing real-time solutions often depend on simple heuristics that generate high false positives or fail to adapt to cross-chain attack patterns.
+
+\textbf{Our Contribution.} To address these challenges, we introduce \textbf{TrustManager}, a resilient and explainable trust management framework. Our key contributions are as follows:
+\begin{enumerate}
+    \item \textbf{Hybrid AI-Oracle Architecture:} We propose a novel consensus mechanism that bridges on-chain execution with off-chain Machine Learning (ML) inference. This allows for complex, computation-heavy risk analysis (Random Forest) without incurring prohibitive on-chain gas costs.
+    \item \textbf{Large-Scale Multichain Dataset:} We construct a comprehensive dataset of \textbf{580,934 transactions} across Ethereum Mainnet, Polygon, and Binance Smart Chain (BSC). This dataset combines real-world benign traffic with a sophisticated injection of 7.7\% adversarial samples, including both obvious and stealthy attack vectors.
+    \item \textbf{Rigorous Evaluation \& Explainability:} Unlike prior works that rely on ideal metrics, we perform a rigorous 5-fold cross-validation. Our system achieves an F1-Score of \textbf{96.27\%}, significantly outperforming rule-based baselines (14.01\%). Furthermore, we provide interpretability through feature importance analysis, identifying key risk indicators such as Gas Ratio and Fresh Spender behavior.
+    \item \textbf{Temporal-Aware Detection (Option A):} We introduce a sliding-window feature extraction mechanism to capture attack velocity and patterns over time. This innovation reduces the False Negative rate for stealthy "burst" attacks by \textbf{50\%} compared to traditional static models.
+\end{enumerate}
+
+The remainder of this paper is organized as follows: Section 2 reviews related work. Section 3 details the TrustManager methodology. Section 4 presents the experimental evaluation. Section 5 discusses security analysis and limitations, followed by the conclusion.
