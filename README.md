@@ -122,18 +122,7 @@ For a more detailed artifact-oriented workflow, see `README_ARTIFACT.md`.
 
 ---
 
-## Citation
 
-If you use this code or dataset in your research, please cite the accompanying paper:
-
-```bibtex
-@inproceedings{zhang2026trustmanager,
-  title={TrustManager: Resilient and Explainable Trust Management for Blockchain Networks via Hybrid AI-Oracle Consensus},
-  author={Anonymous Authors},
-  booktitle={Proceedings of the XXth International Conference on XXX (XXX '26)},
-  year={2026}
-}
-```
 
 ---
 
